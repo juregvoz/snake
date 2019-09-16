@@ -3,5 +3,35 @@ require 'ruby2d'
 # Set window dimensions
 set width: 600, height: 600
 
+
+module Snake
+  
+  # Set instance variables, create canvas
+  def self.setup
+    # Set sizes
+    @part_size = 20 # pixels
+    @full_size = 27 # parts
+    padding = 30
+    border_width = 10
+    border_size = @part_size * @full_size
+    canvas_size = @part_size * (@full_size - 1)
+    # Set speed
+    @x_speed = 0
+    @y_speed = 0
+    # Set extremums
+    @max = border_size + padding - @part_size
+    @min = padding + border_width
+
+    # Create border
+    Square.new(x: padding, y: padding, size: border_size, color: 'orange')
+    # Create canvas
+    Square.new(x: @min, y: @min, size: canvas_size, color: 'black')
+  end
+
+end
+
+
+Snake.setup
+
 # Show winow
 show
