@@ -28,7 +28,33 @@ module Snake
     Square.new(x: @min, y: @min, size: canvas_size, color: 'black')
   end
 
-  
+
+  # Create the snake and place it on random location
+  def self.init_snake
+
+    self.setup
+
+    # Get tail coordinates
+    rand_x, rand_y = Snake::get_random_cordinates
+
+    # Get distances between tail and border in each direction
+    distances = {
+      :left => rand_x - @min, :right => @max - rand_x,
+      :up   => rand_y - @min, :down  => @max - rand_y }
+    # Find the longest distance name
+    max_dist = distances.invert.sort.last[1]
+
+    @snake = Array.new
+    # Add tail square
+    @snake << Square.new(x: rand_x, y: rand_y, size: @part_size, color: 'red')
+
+    # TODO:
+    #   - add two more squares to snake, in direction
+    #     of the longest distance
+    #   - store snake's head into instance variable
+  end
+
+
   # Get random x and y inside canvas
   def self.get_random_cordinates
     range = (3..@full_size-1)
@@ -38,7 +64,7 @@ module Snake
 end
 
 
-Snake.setup
+Snake.init_snake
 
 # Show winow
 show
