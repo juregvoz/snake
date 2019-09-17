@@ -28,6 +28,13 @@ module Snake
     Square.new(x: @min, y: @min, size: canvas_size, color: 'black')
   end
 
+  
+  # Get random x and y inside canvas
+  def self.get_random_cordinates
+    range = (3..@full_size-1)
+    x,y = 2.times.map {rand( range) * @part_size }
+  end
+
 end
 
 
