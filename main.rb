@@ -11,8 +11,8 @@ module Snake
     # Set sizes
     @part_size = 20 # pixels
     @full_size = 27 # parts
-    padding = 30
-    border_width = 10
+    padding = 1.5 * @part_size
+    border_width = 0.5 * @part_size
     border_size = @part_size * @full_size
     canvas_size = @part_size * (@full_size - 1)
     # Set speed
