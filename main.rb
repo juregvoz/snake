@@ -48,10 +48,40 @@ module Snake
     # Add tail square
     @snake << Square.new(x: rand_x, y: rand_y, size: @part_size, color: 'red')
 
-    # TODO:
-    #   - add two more squares to snake, in direction
-    #     of the longest distance
-    #   - store snake's head into instance variable
+    # Lengthen snake
+    self.init_lengthen(rand_x, rand_y, direction)
+
+    @head = @snake.first
+    @head.color = 'green'
+  end
+    
+
+  # Lengthen snake for two parts, based on
+  # cordinates and direction
+  def self.init_lengthen(x, y, direction)
+
+    2.times do
+      case direction
+      when :left
+        x -= @part_size
+        @x_speed = -@part_size
+        @right_disbled = true
+      when :right
+        x += @part_size
+        @x_speed = @part_size
+        @left_disbled = true
+      when :up
+        y -= @part_size
+        @y_speed = -@part_size
+        @down_disbled = true
+      when :down
+        y += @part_size
+        @y_speed = @part_size
+        @up_disbled = true
+      end
+
+      @snake.unshift Square.new(x: x, y: y, size: @part_size, color: 'red')
+    end
   end
 
 
