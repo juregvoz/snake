@@ -57,7 +57,7 @@ module Snake
 
   # Get random x and y inside canvas
   def self.get_random_cordinates
-    range = (3..@full_size-1)
+    range = (3..@full_size-5)
     x,y = 2.times.map {rand( range) * @part_size }
   end
 
