@@ -41,8 +41,8 @@ module Snake
     distances = {
       :left => rand_x - @min, :right => @max - rand_x,
       :up   => rand_y - @min, :down  => @max - rand_y }
-    # Find the longest distance name
-    max_dist = distances.invert.sort.last[1]
+    # Find direction of the longest distance
+    direction = distances.invert.sort.last[1]
 
     @snake = Array.new
     # Add tail square
