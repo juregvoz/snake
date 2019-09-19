@@ -85,6 +85,31 @@ module Snake
   end
 
 
+  # Move snake based on its speed, by adding and removing parts.
+  def self.move
+    tick = 0
+    speed = 10
+
+    # Update loop
+    Ruby2D::Window.update do
+
+      if tick % speed == 0
+        x = @snake.first.x
+        y = @snake.first.y
+
+        @snake.unshift Square.new(x: x += @x_speed,y: y += @y_speed,size: @part_size, color: 'red')
+      
+        @snake.each {|part| part.color = 'red'}
+        @snake.first.color = 'green'
+        tail = @snake.pop
+        tail.remove
+      end
+
+      tick += 1
+    end
+  end
+
+
   # Get random x and y inside canvas
   def self.get_random_cordinates
     range = (3..@full_size-5)
@@ -95,6 +120,7 @@ end
 
 
 Snake.init_snake
+Snake.move
 
 # Show winow
 show
