@@ -110,6 +110,36 @@ module Snake
   end
 
 
+  # On key press turn the snake:
+  # change speed and disabled direction
+  def self.turn
+    Ruby2D::Window.on :key_down do |event|
+      case event.key
+      when 'left'
+        unless @left_disabled
+          @x_speed = -@part_size; @y_speed = 0;
+          @up_disabled = false; @down_disabled = false; @right_disabled = true;
+        end
+      when 'right'
+        unless @right_disabled
+          @x_speed = @part_size; @y_speed = 0;
+          @up_disabled = false; @down_disabled = false; @left_disabled = true;
+        end
+      when 'up'
+        unless @up_disabled
+          @x_speed = 0; @y_speed = -@part_size;
+          @left_disabled = false; @right_disabled = false; @down_disabled = true;
+        end
+      when 'down'
+        unless @down_disabled
+          @x_speed = 0; @y_speed = @part_size;
+          @left_disabled = false; @right_disabled = false; @up_disabled = true;
+        end
+      end
+    end
+  end
+
+
   # Get random x and y inside canvas
   def self.get_random_cordinates
     range = (3..@full_size-5)
@@ -121,6 +151,7 @@ end
 
 Snake.init_snake
 Snake.move
+Snake.turn
 
 # Show winow
 show
