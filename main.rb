@@ -26,6 +26,9 @@ module Snake
     Square.new(x: padding, y: padding, size: border_size, color: 'orange')
     # Create canvas
     Square.new(x: @min, y: @min, size: canvas_size, color: 'black')
+
+    # Place food
+    @food = self.place_food
   end
 
 
@@ -137,6 +140,13 @@ module Snake
         end
       end
     end
+  end
+
+
+  # Randomly place food
+  def self.place_food
+    rand_x, rand_y = Snake::get_random_cordinates
+    return Square.new(x: rand_x, y: rand_y, size: @part_size, color: 'blue')
   end
 
 
