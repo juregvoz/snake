@@ -100,12 +100,21 @@ module Snake
         x = @snake.first.x
         y = @snake.first.y
 
+        # Add new part and update colors
         @snake.unshift Square.new(x: x += @x_speed,y: y += @y_speed,size: @part_size, color: 'red')
-      
+        @head = @snake.first
         @snake.each {|part| part.color = 'red'}
-        @snake.first.color = 'green'
-        tail = @snake.pop
-        tail.remove
+        @head.color = 'green'
+
+        # Remove the food and lengthen the snake (keep the tail),
+        # or just remove the tail.
+        if @head.x == @food.x and @head.y == @food.y
+          @food.remove
+          @food = self.place_food
+        else
+          tail = @snake.pop
+          tail.remove
+        end
       end
 
       tick += 1
