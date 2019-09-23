@@ -89,35 +89,47 @@ module Snake
 
 
   # Move snake based on its speed, by adding and removing parts.
+  # Stop moving if snake hits the border.
   def self.move
     tick = 0
     speed = 10
+    too_low = @min - @part_size
+    too_high = @max + 0.5 * @part_size
 
     # Update loop
     Ruby2D::Window.update do
 
-      if tick % speed == 0
-        x = @snake.first.x
-        y = @snake.first.y
+      unless @stop
+        if tick % speed == 0
+          x = @snake.first.x
+          y = @snake.first.y
+          # Update cordinates
+          x += @x_speed
+          y += @y_speed
 
-        # Add new part and update colors
-        @snake.unshift Square.new(x: x += @x_speed,y: y += @y_speed,size: @part_size, color: 'red')
-        @head = @snake.first
-        @snake.each {|part| part.color = 'red'}
-        @head.color = 'green'
-
-        # Remove the food and lengthen the snake (keep the tail),
-        # or just remove the tail.
-        if @head.x == @food.x and @head.y == @food.y
-          @food.remove
-          @food = self.place_food
-        else
-          tail = @snake.pop
-          tail.remove
+          # Stop if snake hits the border
+          if x == too_low or x == too_high or y == too_low or y == too_high
+            @stop = true
+          else
+            # Add new part and update colors
+            @snake.unshift Square.new(x: x,y: y,size: @part_size, color: 'red')
+            @head = @snake.first
+            @snake.each {|part| part.color = 'red'}
+            @head.color = 'green'
+            # Remove the food and lengthen the snake (keep the tail),
+            # or just remove the tail.
+            if @head.x == @food.x and @head.y == @food.y
+              @food.remove
+              @food = self.place_food
+            else
+              tail = @snake.pop
+              tail.remove
+            end
+          end
         end
-      end
 
-      tick += 1
+        tick += 1
+      end
     end
   end
 
