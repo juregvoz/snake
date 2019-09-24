@@ -109,6 +109,7 @@ module Snake
 
           # Stop if snake hits the border
           if x == too_low or x == too_high or y == too_low or y == too_high
+            self.game_over
             @stop = true
           else
             # Add new part and update colors
@@ -161,6 +162,14 @@ module Snake
         end
       end
     end
+  end
+
+
+  # Called when snake hits the border
+  def self.game_over
+    sound = Sound.new('Smashing-Yuri_Santana-1233262689.mp3')
+    sound.play
+    Text.new('Game over!', x: 0.35 * @max, y: 0.5 * @max, size: 40, color: 'red')
   end
 
 
