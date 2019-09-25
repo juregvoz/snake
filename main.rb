@@ -111,6 +111,7 @@ module Snake
           if x == too_low or x == too_high or y == too_low or y == too_high
             self.game_over
             @stop = true
+            @food.remove
           else
             # Add new part and update colors
             @snake.unshift Square.new(x: x,y: y,size: @part_size, color: 'red')
@@ -169,7 +170,32 @@ module Snake
   def self.game_over
     sound = Sound.new('Smashing-Yuri_Santana-1233262689.mp3')
     sound.play
+
     Text.new('Game over!', x: 0.35 * @max, y: 0.5 * @max, size: 40, color: 'red')
+    Text.new('Try again?', x: 0.4 * @max, y: 0.6 * @max, size: 30, color: 'orange')
+
+    # Add buttons with text
+    yes_box = Rectangle.new(x: 0.415 * @max, y: 0.7 * @max, width: 60, height: 30, color: 'blue')
+    Text.new('Yes',x: 0.43 * @max, y: 0.7 * @max, size: 25, color: 'black')
+    no_box = Rectangle.new(x: 0.53 * @max, y: 0.7 * @max, width: 60, height: 30, color: 'orange')
+    Text.new('No',x: 0.555 * @max, y: 0.7 * @max, size: 25, color: 'black')
+
+    # Color buttons on hover
+    Ruby2D::Window.on :mouse_move do |e|
+      yes_box.contains?(e.x, e.y) ? yes_box.color = 'green' : yes_box.color = 'blue'
+      no_box.contains?(e.x, e.y) ? no_box.color = 'red' : no_box.color = 'orange'
+    end
+
+    # On button click reload or close the game
+    Ruby2D::Window.on :mouse_down do |e|
+      if yes_box.contains?(e.x, e.y)
+        Ruby2D::Window.clear
+        Snake.init_snake
+        @stop = false
+      elsif no_box.contains?(e.x, e.y)
+        Ruby2D::Window.close
+      end
+    end
   end
 
 
