@@ -29,6 +29,9 @@ module Snake
 
     # Place food
     @food = self.place_food
+
+    # Add score text
+    @score_text = Text.new("Score: 0", x: padding + 5, y: padding - 20, size: 15, color: 'orange')
   end
 
 
@@ -95,6 +98,7 @@ module Snake
     speed = 10
     too_low = @min - @part_size
     too_high = @max + 0.5 * @part_size
+    score = 0
 
     # Update loop
     Ruby2D::Window.update do
@@ -118,11 +122,13 @@ module Snake
             @head = @snake.first
             @snake.each {|part| part.color = 'red'}
             @head.color = 'green'
-            # Remove the food and lengthen the snake (keep the tail),
+            # Remove the food, lengthen the snake (keep the tail), update score,
             # or just remove the tail.
             if @head.x == @food.x and @head.y == @food.y
               @food.remove
               @food = self.place_food
+              score += 1
+              @score_text.text = "Score: #{score}"
             else
               tail = @snake.pop
               tail.remove
