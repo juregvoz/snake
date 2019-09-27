@@ -129,6 +129,8 @@ module Snake
               @food = self.place_food
               score += 1
               @score_text.text = "Score: #{score}"
+              # Update speed factor
+              speed -= 1 if score % 5 == 0
             else
               tail = @snake.pop
               tail.remove
