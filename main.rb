@@ -135,6 +135,7 @@ module Snake
               tail = @snake.pop
               tail.remove
             end
+            @locked = false
           end
         end
 
@@ -150,24 +151,28 @@ module Snake
     Ruby2D::Window.on :key_down do |event|
       case event.key
       when 'left'
-        unless @left_disabled
+        unless @locked or @left_disabled
           @x_speed = -@part_size; @y_speed = 0;
           @up_disabled = false; @down_disabled = false; @right_disabled = true;
+          @locked = true
         end
       when 'right'
-        unless @right_disabled
+        unless @locked or @right_disabled
           @x_speed = @part_size; @y_speed = 0;
           @up_disabled = false; @down_disabled = false; @left_disabled = true;
+          @locked = true
         end
       when 'up'
-        unless @up_disabled
+        unless @locked or @up_disabled
           @x_speed = 0; @y_speed = -@part_size;
           @left_disabled = false; @right_disabled = false; @down_disabled = true;
+          @locked = true
         end
       when 'down'
-        unless @down_disabled
+        unless @locked or @down_disabled
           @x_speed = 0; @y_speed = @part_size;
           @left_disabled = false; @right_disabled = false; @up_disabled = true;
+          @locked = true
         end
       end
     end
