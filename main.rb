@@ -111,8 +111,11 @@ module Snake
           x += @x_speed
           y += @y_speed
 
+          # Check if snake will hit itself
+          @snake.each{|p| @hit_self = true if p.x == x and p.y == y}
+
           # Stop if snake hits the border
-          if x == too_low or x == too_high or y == too_low or y == too_high
+          if x == too_low or x == too_high or y == too_low or y == too_high or @hit_self
             self.game_over
             @stop = true
             @food.remove
@@ -205,6 +208,7 @@ module Snake
         Ruby2D::Window.clear
         Snake.init_snake
         @stop = false
+        @hit_self = false
       elsif no_box.contains?(e.x, e.y)
         Ruby2D::Window.close
       end
