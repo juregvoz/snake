@@ -95,16 +95,16 @@ module Snake
   # Stop moving if snake hits the border.
   def self.move
     tick = 0
-    speed = 10
+    @speed = 10
     too_low = @min - @part_size
     too_high = @max + 0.5 * @part_size
-    score = 0
+    @score = 0
 
     # Update loop
     Ruby2D::Window.update do
 
       unless @stop
-        if tick % speed == 0
+        if tick % @speed == 0
           x = @snake.first.x
           y = @snake.first.y
           # Update cordinates
@@ -130,10 +130,10 @@ module Snake
             if @head.x == @food.x and @head.y == @food.y
               @food.remove
               @food = self.place_food
-              score += 1
-              @score_text.text = "Score: #{score}"
+              @score += 1
+              @score_text.text = "Score: #{@score}"
               # Update speed factor
-              speed -= 1 if score % 5 == 0
+              @speed -= 1 if @score % 5 == 0
             else
               tail = @snake.pop
               tail.remove
@@ -209,6 +209,8 @@ module Snake
         Snake.init_snake
         @stop = false
         @hit_self = false
+        @score = 0
+        @speed = 10
       elsif no_box.contains?(e.x, e.y)
         Ruby2D::Window.close
       end
