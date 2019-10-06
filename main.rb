@@ -216,9 +216,21 @@ module Snake
   end
 
 
-  # Randomly place food
+  # Randomly place food. Make sure it's not placed on the snake.
   def self.place_food
-    rand_x, rand_y = Snake::get_random_cordinates
+    rand_x, rand_y = nil
+
+    if @snake
+      loop do
+        food_on_snake = false
+        rand_x, rand_y = Snake::get_random_cordinates
+        @snake.each{|p| food_on_snake = true if p.x == rand_x and p.y == rand_y}
+        break if food_on_snake == false
+      end
+    else
+      rand_x, rand_y = Snake::get_random_cordinates
+    end
+
     return Square.new(x: rand_x, y: rand_y, size: @part_size, color: 'blue')
   end
 
