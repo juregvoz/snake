@@ -3,8 +3,7 @@
 ## Description
 Snake is a game, that needs no introduction. In this case it's written in Ruby, using Ruby 2D library
 
-![game_running](Screenshots/game_running.png)
-![game_over](Screenshots/game_over.png)
+![gif](snake.gif)
 
 ## Installation
 
